@@ -30,13 +30,23 @@ function calcularTotal() {
 // Función de salida
 function renderizar() {
     lista.innerHTML = "";
+    gastos.forEach((gasto, index) => {
+    const li = document.createElement ("li");
+  
+    li.innerHTML = `
+        ${gasto.nombre} - $${gasto.monto}
+        <button>ELIMINAR</button>
+      `;
 
-    gastos.forEach(gasto => {
-        const li = document.createElement("li");
-        li.textContent = `${gasto.nombre} - $${gasto.monto}`;
-        lista.appendChild(li);
+    const boton = li.querySelector("button").addEventListener("click", () => {
+        console.log("Eliminar índice", index);
+        gastos.splice(index, 1);
+        localStorage.setItem("gastos", JSON.stringify(gastos));
+        renderizar();
     });
 
+    lista.appendChild(li);
+}),
     totalSpan.textContent = calcularTotal();
 }
 
